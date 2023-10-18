@@ -24,6 +24,8 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     const images = [SponserADJC, SponserMieledju, SponserTextr, SponserCEV, SponserVastgoed];
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    const [playAds, setPlayAds] = useState(false);
+
     const [Commercial, setCommercial] = useState(false);
     const [HomeTimeouts, setHomeTimeOuts] = useState("");
     let currentHomeTimeouts = 0;
@@ -93,6 +95,10 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                 HandleAwayTeamSetPointUp()
             } else if (event.key === "p") {
                 HandleAwayTimeOuts()
+            } else if (event.key === "t") {
+                PlayAdsBetweenSets();
+            } else if (event.key === "y") {
+                StopAdsBetweenSets();
             }
         };
 
@@ -108,6 +114,16 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
             setCurrentlyTimeOut(false);
         }
     }, [time])
+
+    const PlayAdsBetweenSets = () => {
+        setCommercial(false);
+        setPlayAds(true);
+    }
+
+    const StopAdsBetweenSets = () => {
+        setCommercial(true);
+        setPlayAds(false)
+    }
 
     const HandleHomeTimeOuts = () => {
         currentHomeTimeouts = currentHomeTimeouts + 1;
@@ -168,6 +184,15 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
             HomeTeamPoints = 0;
             setAwayPoints(0);
             AwayTeamPoints = 0;
+
+            //clear timeouts
+            currentHomeTimeouts = 0;
+            setHomeTimeOuts()
+            currentAwayTimeouts = 0;
+            setAwayTimeOuts()
+
+            setIsHomeTimeOut(false);
+            setIsAwayTimeOut(false);
 
             currentSets = currentSets + 1
             setCurrentSet(currentSets);
@@ -237,6 +262,15 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
             HomeTeamPoints = 0;
             setAwayPoints(0);
             AwayTeamPoints = 0;
+
+            //clear time outs
+            currentHomeTimeouts = 0;
+            setHomeTimeOuts()
+            currentAwayTimeouts = 0;
+            setAwayTimeOuts()
+
+            setIsHomeTimeOut(false);
+            setIsAwayTimeOut(false);
 
             currentSets = currentSets + 1
             setCurrentSet(currentSets);
@@ -330,8 +364,8 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                     <img src={Decospan} alt="" />
                 </div>
             </div>
-            <div className={CurrentlyTimeOut ? 'Scorebord-Content-Container-TimeOut' : 'Scorebord-Content-Container'}>
-                {CurrentlyTimeOut ? (Commercial ? <video width={"60%"} autoPlay muted loop>
+            <div className={CurrentlyTimeOut || playAds ? 'Scorebord-Content-Container-TimeOut' : 'Scorebord-Content-Container'}>
+                {CurrentlyTimeOut || playAds ? (Commercial ? <video width={"60%"} autoPlay muted loop>
                         <source src={SponserCommercial} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video> : 
@@ -358,7 +392,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                         <div className='Away-TeamName ContentWidth'>{AwayTeamName}</div>
                     </div>
                 }
-                {CurrentlyTimeOut ? <div></div> :
+                {CurrentlyTimeOut || playAds ? <div></div> :
                     <div className='Team-Logos'>
                         <div className='Home-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={HomeTeamImage} alt="" /></div>
                         <div className='Away-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={AwayTeamImage} alt="" /></div>

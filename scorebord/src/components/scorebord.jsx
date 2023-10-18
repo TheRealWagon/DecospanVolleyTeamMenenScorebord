@@ -8,6 +8,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import SponserCommercial from '../images/Comercial.mp4'
+
 import { useEffect, useState } from 'react';
 
 //https://media.licdn.com/dms/image/D4E22AQHLsTATqxlUWw/feedshare-shrink_800/0/1683318081669?e=1699488000&v=beta&t=vHF0En4T8onOM6s2AW_zsr5MSLf0gsVN3CLTnW1-ux0
@@ -33,6 +35,8 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     let HomeTeamSetPoints = 0;
     const [AwaySetPoints, setAwaySetPoints] = useState(0);
     let AwayTeamSetPoints = 0;
+
+    const [CurrentlyTimeOut, setCurrentlyTimeOut] = useState(false);
 
     const [time, setTime] = useState(0);
 
@@ -82,10 +86,17 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
         };
     }, [])
 
+    useEffect(() => {
+        if (time == 0) {
+            setCurrentlyTimeOut(false);
+        }
+    }, [time])
+
     const HandleHomeTimeOuts = () => {
         currentHomeTimeouts = currentHomeTimeouts + 1;
         setIsHomeTimeOut(true);
-        HandleHomeTimeOut(currentHomeTimeouts)
+        setCurrentlyTimeOut(true);
+        HandleHomeTimeOut(currentHomeTimeouts);
     }
 
     const HandleHomeTimeOut = (numberOfTimeouts) => {
@@ -99,6 +110,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     const HandleAwayTimeOuts = () => {
         currentAwayTimeouts = currentAwayTimeouts + 1;
         setIsAwayTimeOut(true);
+        setCurrentlyTimeOut(true);
         HandleAwayTimeOut(currentAwayTimeouts)
     }
 
@@ -300,22 +312,31 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                 </div>
             </div>
             <div className='Scorebord-Content-Container'>
-                <div className='Team-Names'>
-                    <div className='Home-TeamName ContentWidth'>{HomeTeamName}</div>
-                    <div className='Set-Points'>
-                        <div className='Set-Points-Sets'>{HomeSetPoints} - {AwaySetPoints}</div>
-                        <div className='Set-Points-Sets-Line'></div>
-                        <div>{ScoreSet1}</div>
-                        <div>{ScoreSet2}</div>
-                        <div>{ScoreSet3}</div>
-                        <div>{ScoreSet4}</div>
+                {CurrentlyTimeOut ? 
+                    <video width="1000" height="500" autoPlay muted>
+                        <source src={SponserCommercial} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                :
+                    <div className='Team-Names'>
+                        <div className='Home-TeamName ContentWidth'>{HomeTeamName}</div>
+                        <div className='Set-Points'>
+                            <div className='Set-Points-Sets'>{HomeSetPoints} - {AwaySetPoints}</div>
+                            <div className='Set-Points-Sets-Line'></div>
+                            <div>{ScoreSet1}</div>
+                            <div>{ScoreSet2}</div>
+                            <div>{ScoreSet3}</div>
+                            <div>{ScoreSet4}</div>
+                        </div>
+                        <div className='Away-TeamName ContentWidth'>{AwayTeamName}</div>
                     </div>
-                    <div className='Away-TeamName ContentWidth'>{AwayTeamName}</div>
-                </div>
-                <div className='Team-Logos'>
-                    <div className='Home-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={HomeTeamImage} alt="" /></div>
-                    <div className='Away-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={AwayTeamImage} alt="" /></div>
-                </div>
+                }
+                {CurrentlyTimeOut ? <div></div> :
+                    <div className='Team-Logos'>
+                        <div className='Home-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={HomeTeamImage} alt="" /></div>
+                        <div className='Away-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={AwayTeamImage} alt="" /></div>
+                    </div>
+                }
                 <div className='Team-Points'>
                     <div className='Home-Team-Points ContentWidth'>{HomePoints}</div>
                     <div className='TimeOut'>

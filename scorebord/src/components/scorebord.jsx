@@ -313,7 +313,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
             </div>
             <div className='Scorebord-Content-Container'>
                 {CurrentlyTimeOut ? 
-                    <video width="1000" height="500" autoPlay muted>
+                    <video width="1000" height="800" autoPlay muted loop>
                         <source src={SponserCommercial} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>

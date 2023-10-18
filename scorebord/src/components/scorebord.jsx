@@ -8,6 +8,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import SponserADJC from '../images/SponserADJCLeaning.jpg';
+import SponserMieledju from '../images/SponserMieledju.jpg';
+import SponserTextr from '../images/SponserTextr.jpg';
+import SponserCEV from '../images/CEVVolleyCUP.jpg';
+import SponserVastgoed from '../images/SponserVastgoedexpert.jpg';
+
 import SponserCommercial from '../images/Comercial.mp4'
 
 import { useEffect, useState } from 'react';
@@ -15,6 +21,10 @@ import { useEffect, useState } from 'react';
 //https://media.licdn.com/dms/image/D4E22AQHLsTATqxlUWw/feedshare-shrink_800/0/1683318081669?e=1699488000&v=beta&t=vHF0En4T8onOM6s2AW_zsr5MSLf0gsVN3CLTnW1-ux0
 
 const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) => {
+    const images = [SponserADJC, SponserMieledju, SponserTextr, SponserCEV, SponserVastgoed];
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const [Commercial, setCommercial] = useState(false);
     const [HomeTimeouts, setHomeTimeOuts] = useState("");
     let currentHomeTimeouts = 0;
     const [isHomeTimeOut, setIsHomeTimeOut] = useState(false);
@@ -39,6 +49,13 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     const [CurrentlyTimeOut, setCurrentlyTimeOut] = useState(false);
 
     const [time, setTime] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 6000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
@@ -95,6 +112,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     const HandleHomeTimeOuts = () => {
         currentHomeTimeouts = currentHomeTimeouts + 1;
         setIsHomeTimeOut(true);
+        setCommercial(prevState => !prevState);
         setCurrentlyTimeOut(true);
         HandleHomeTimeOut(currentHomeTimeouts);
     }
@@ -110,6 +128,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     const HandleAwayTimeOuts = () => {
         currentAwayTimeouts = currentAwayTimeouts + 1;
         setIsAwayTimeOut(true);
+        setCommercial(prevState => !prevState);
         setCurrentlyTimeOut(true);
         HandleAwayTimeOut(currentAwayTimeouts)
     }
@@ -311,12 +330,20 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                     <img src={Decospan} alt="" />
                 </div>
             </div>
-            <div className='Scorebord-Content-Container'>
-                {CurrentlyTimeOut ? 
-                    <video width="1000" height="800" autoPlay muted loop>
+            <div className={CurrentlyTimeOut ? 'Scorebord-Content-Container-TimeOut' : 'Scorebord-Content-Container'}>
+                {CurrentlyTimeOut ? (Commercial ? <video width={"60%"} autoPlay muted loop>
                         <source src={SponserCommercial} type="video/mp4" />
                         Your browser does not support the video tag.
-                    </video>
+                    </video> : 
+                    <div className='image-slider'>
+                        {images.map((image, index) => (
+                            <img 
+                                key={index} 
+                                src={image} 
+                                alt={`Image ${index + 1}`} 
+                                className={`slider-image ${currentImageIndex === index ? 'visible' : 'hidden'}`}/>
+                        ))}
+                    </div>)
                 :
                     <div className='Team-Names'>
                         <div className='Home-TeamName ContentWidth'>{HomeTeamName}</div>

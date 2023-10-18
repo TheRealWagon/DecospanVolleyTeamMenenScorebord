@@ -98,6 +98,10 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                 PlayAdsBetweenSets();
             } else if (event.key === "y") {
                 StopAdsBetweenSets();
+            } else if (event.key === "z") {
+                StopTimeOut();
+            } else if (event.key === "o") {
+                StopTimeOut();
             }
         };
 
@@ -107,6 +111,11 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
             window.removeEventListener('keydown', handleKeyPress);
         };
     }, [])
+
+    const StopTimeOut = () => {
+        setCurrentlyTimeOut(false);
+        setTime(0);
+    }
 
     useEffect(() => {
         if (time == 0) {

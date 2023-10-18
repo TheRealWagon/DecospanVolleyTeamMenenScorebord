@@ -13,15 +13,14 @@ import SponserMieledju from '../images/SponserMieledju.jpg';
 import SponserTextr from '../images/SponserTextr.jpg';
 import SponserCEV from '../images/CEVVolleyCUP.jpg';
 import SponserVastgoed from '../images/SponserVastgoedexpert.jpg';
-
-import SponserCommercial from '../images/Comercial.mp4'
+import consultes from '../images/consultes.png'
 
 import { useEffect, useState } from 'react';
 
 //https://media.licdn.com/dms/image/D4E22AQHLsTATqxlUWw/feedshare-shrink_800/0/1683318081669?e=1699488000&v=beta&t=vHF0En4T8onOM6s2AW_zsr5MSLf0gsVN3CLTnW1-ux0
 
 const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) => {
-    const images = [SponserADJC, SponserMieledju, SponserTextr, SponserCEV, SponserVastgoed];
+    const images = [SponserADJC, SponserMieledju, SponserTextr, SponserCEV, SponserVastgoed, consultes];
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const [playAds, setPlayAds] = useState(false);
@@ -55,7 +54,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
     useEffect(() => {
         const interval = setInterval(() => {
           setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 6000);
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
 
@@ -342,7 +341,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
 
     return (
         <div className="Scorebord-Container">
-            <div className='Scorebord-Sponsers' style={{display: 'none'}}>
+            {/* <div className='Scorebord-Sponsers' style={{display: 'none'}}>
                 <div className='Scorebord-Sponsers-top'></div>
                 <div className='Scorebord-Sponsers-bot'></div>
                 <div className='Scorebord-Sponsers-slide'>
@@ -363,21 +362,18 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                     <img src={Decospan} alt="" />
                     <img src={Decospan} alt="" />
                 </div>
-            </div>
+            </div> */}
             <div className={CurrentlyTimeOut || playAds ? 'Scorebord-Content-Container-TimeOut' : 'Scorebord-Content-Container'}>
-                {CurrentlyTimeOut || playAds ? (Commercial ? <video width={"60%"} autoPlay muted loop>
-                        <source src={SponserCommercial} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video> : 
+                {CurrentlyTimeOut || playAds ? 
                     <div className='image-slider'>
                         {images.map((image, index) => (
                             <img 
                                 key={index} 
                                 src={image} 
                                 alt={`Image ${index + 1}`} 
-                                className={`slider-image ${currentImageIndex === index ? 'visible' : 'hidden'}`}/>
+                                className={`slider-image ${playAds ? 'slider-image-fullheight' : 'slider-image-smallheight'} ${currentImageIndex === index ? 'visible' : 'hidden'}`}/>
                         ))}
-                    </div>)
+                    </div>
                 :
                     <div className='Team-Names'>
                         <div className='Home-TeamName ContentWidth'>{HomeTeamName}</div>
@@ -398,6 +394,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                         <div className='Away-Team-Logo ContentWidth'><img className='Scorebord-Logo' src={AwayTeamImage} alt="" /></div>
                     </div>
                 }
+                {playAds ? <div></div> :
                 <div className='Team-Points'>
                     <div className='Home-Team-Points ContentWidth'>{HomePoints}</div>
                     <div className='TimeOut'>
@@ -412,8 +409,9 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                     </div>
                     <div className='Away-Team-Points ContentWidth'>{AwayPoints}</div>
                 </div>
+                }
             </div>
-            <div className='Scorebord-Text-Container' style={{display: 'none'}}>
+            {/* <div className='Scorebord-Text-Container' style={{display: 'none'}}>
                 <div className='Scorebord-Text-Team-Container'>
                     <div>MENEN</div>
                     <div className='Scorebord-Logo-Container'><img className='Scorebord-Logo' src={volleybal} alt="" /></div>
@@ -437,15 +435,15 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                         </div>
                         <div className='Scorebord-Timeout-Container'>
                             <div className='Scorebord-Timeout-Left'>
-                                {/* <div className='Scorebord-Timeout-Point'></div> */}
-                                {/* <div className='Scorebord-Timeout-Point'></div> */}
+                                <div className='Scorebord-Timeout-Point'></div>
+                                <div className='Scorebord-Timeout-Point'></div>
                                 <div className='Scorebord-Timeout-Point'></div>
                             </div>
                             <div className='Scorebord-Timeout-Middle'></div>
                             <div className='Scorebord-Timeout-Right'>
-                                {/* <div className='Scorebord-Timeout-Point'></div> */}
-                                {/* <div className='Scorebord-Timeout-Point'></div> */}
-                                {/* <div className='Scorebord-Timeout-Point'></div> */}
+                                <div className='Scorebord-Timeout-Point'></div>
+                                <div className='Scorebord-Timeout-Point'></div>
+                                <div className='Scorebord-Timeout-Point'></div>
                             </div>
                         </div>
                     </div>
@@ -477,7 +475,7 @@ const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) =
                     <img src={Decospan} alt="" />
                     <img src={Decospan} alt="" />
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 

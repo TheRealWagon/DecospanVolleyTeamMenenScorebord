@@ -325,11 +325,18 @@ body {
     font-size: 6rem;
 }
 
+.slider-image-fullheight {
+    height: 100%;
+}
+
+.slider-image-smallheight {
+    height: 80%;
+}
+
 .slider-image {
     transition: opacity 1s;
     /* position: absolute; */
     /* width: 45%; */
-    height: 80%;
     position: absolute;
 
     top: 0;

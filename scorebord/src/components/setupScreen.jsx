@@ -49,7 +49,7 @@ const SetupScreen = () => {
                     ) : (
                         <div className='Team-Info'>
                             <div>Naam: {HomeTeamName}</div>
-                            <div>Logo: <img src={HomeTeamImage} alt="" /></div>
+                            <div>Logo: <img width={'50%'} src={HomeTeamImage} alt="" /></div>
                         </div>
                     )}
                 </div>
@@ -73,7 +73,7 @@ const SetupScreen = () => {
                     ) : (
                         <div className='Team-Info'>
                             <div>Naam: {AwayTeamName}</div>
-                            <div>Logo: <img src={AwayTeamImage} alt="" /></div>
+                            <div>Logo: <img width={'50%'} src={AwayTeamImage} alt="" /></div>
                         </div>
                     )}
                     </div>

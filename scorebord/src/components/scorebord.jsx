@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 //https://media.licdn.com/dms/image/D4E22AQHLsTATqxlUWw/feedshare-shrink_800/0/1683318081669?e=1699488000&v=beta&t=vHF0En4T8onOM6s2AW_zsr5MSLf0gsVN3CLTnW1-ux0
 
 const Scorebord = ({HomeTeamName, AwayTeamName, HomeTeamImage, AwayTeamImage}) => {
-    const images = [SponserADJC, SponserMieledju, SponserTextr, SponserCEV, SponserVastgoed, consultes];
+    const images = [SponserADJC, SponserMieledju, SponserTextr, SponserVastgoed, consultes];
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const [playAds, setPlayAds] = useState(false);

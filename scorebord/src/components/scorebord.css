@@ -86,6 +86,7 @@ body {
 
 .Scorebord-Logo {
     width: 300px;
+    /* height: 30%; */
     aspect-ratio: 4/4;
 
 }
@@ -330,7 +331,7 @@ body {
 }
 
 .slider-image-smallheight {
-    height: 80%;
+    height: 70%;
 }
 
 .slider-image {
